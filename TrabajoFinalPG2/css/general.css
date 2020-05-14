@@ -1,0 +1,46 @@
+html { height:100%; }
+
+body {
+	margin-top: 0;
+	margin-left: 0;
+	margin-right: 0;
+	margin-bottom: 0;
+
+	height: 100%; 
+}
+
+.header { 
+	height: 110px; 
+	top: 0;
+	background-color: #b71c1c;
+	padding-top: 10px;
+}
+
+.body {
+    height: calc(100vh - 120px); /*50+60*/
+}
+
+.footer { height: 50px; bottom: 0; }
+
+#tabs {
+	height: 98%;
+}
+
+#tabs-1 {
+    height: calc(90% - 100px);
+}
+
+#bartabs1 {
+	margin-bottom: 15px;
+}
+
+#txtIngDescripcion { 
+	text-align:left; 
+	width: 100%;
+}
+
+.lblval {
+	color: red;
+	font-style: oblique;
+	font-size: small;
+}
