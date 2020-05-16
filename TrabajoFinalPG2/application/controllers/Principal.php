@@ -20,6 +20,14 @@ class Principal extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('principal');
+	    $data['msg'] = "";
+	    
+	    if($this->load->database()) {
+	        $data['msg'] = "Conectado!!!";
+	    } else {
+	        $data['msg'] = "No conectado!!!";
+	    }
+	    
+		$this->load->view('principal', $data);
 	}
 }

@@ -34,14 +34,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			            <tr>
 			                <th>Usuario</th>
 			                <th>Nombre</th>
-			                <th>Activo</th>
+			                <th>Estado</th>
 			            </tr>
 			        </thead>
 			        <tfoot>
 			            <tr>
 			                <th>Usuario</th>
 			                <th>Nombre</th>
-			                <th>Activo</th>
+			                <th>Estado</th>
 			            </tr>
 			        </tfoot>
 			    </table>
@@ -57,30 +57,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    My footer
 	</div-->
 	
-	<div id="dialog" title="Agregar tarea">
+	<div id="dialog" title="Usuario">
 		<p>
-			<label for="cboIngUsuario">Usuario responsable: </label>
-		    <select name="cboIngUsuario" id="cboIngUsuario" style="width: 100%"></select>
-		</p>
-		<p>
-		    <label for="txtIngDescripcion">Descripción: </label>
-		    <input type="text" name="txtIngDescripcion" id="txtIngDescripcion" class="ui-widget ui-state-default ui-corner-all" style="width: 100%">
-		    <label id="lblValDescripcion" class="lblval"></label> 
+		    <label for="txtIngUsuario">Usuario: </label>
+		    <input type="text" name="txtIngUsuario" id="txtIngUsuario" class="ui-widget ui-state-default ui-corner-all" style="width: 100%">
+		    <label id="lblValUsuario" class="lblval"></label> 
 		</p>
 		
 		<p>
-			<label for="txtIngFecha">Fecha vencimiento: </label>
-			<input type="text" id="txtIngFecha" class="ui-widget ui-state-default ui-corner-all" readonly>
-			<br><label id="lblValIngFecha" class="lblval"></label> 
+		    <label for="txtIngNombre">Nombre: </label>
+		    <input type="text" name="txtIngNombre" id="txtIngNombre" class="ui-widget ui-state-default ui-corner-all" style="width: 100%">
+		    <label id="lblValNombre" class="lblval"></label> 
 		</p>
 		
 		<p>
-		    <label for="txtIngAvance">Avance(%): </label>
-		    <input type="number" name="txtIngAvance" id="txtIngAvance" class="ui-widget ui-state-default ui-corner-all" min=0 max=100 step=1>
-		    <br><label id="lblValAvance" class="lblval"></label>  
+			<label for="cboIngEstado">Estado: </label>
+		    <select name="cboIngEstado" id="cboIngEstado" style="width: 100%">
+		      	<option value="0">Inactivo</option>
+  				<option value="1">Activo</option>
+		    </select>
 		</p>
 		
-		<button name="btnGuardarTarea" id="btnGuardarTarea">Guardar</button>
+		<button name="btnGuardarUsuario" id="btnGuardarUsuario">Guardar</button>
 	</div> 
 </body>
 </html>

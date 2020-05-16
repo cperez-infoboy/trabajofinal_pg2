@@ -3,30 +3,26 @@ var table = null;
 $( document ).ready(function() {
 	$( "#tabs" ).tabs();
 	
+	
     $( "#dialog" ).dialog({ autoOpen: false, modal: true });
+    $("#cboIngEstado").selectmenu();
+    
     $( "#btnAgregar" ).click(function() {
+		$("#cboIngEstado").val("");
+		$("#txtIngUsuario").val("");
+		$("#txtIngNombre").val("");
+		
+    	$( "#dialog" ).dialog( "open" );
+    	
+		$("#cboIngEstado option:eq(0)").prop("selected", true);
+		$("#cboIngEstado").selectmenu("refresh");
     });
     
-    $( "#btnGuardarTarea" ).click(function() {
+    $( "#btnGuardarUsuario" ).click(function() {
         grabarTarea();
     });
 
-    /*
-	$.ajax({
-		url: "controller/listaestados.php",
-	}).done(function( data ) {
-	      var objdata = JSON.parse(data);
-	      
-	      for(var indice in objdata.data) {
-	    		$("#cboBusEstado").append($('<option>', {
-	    	        value: objdata.data[indice][0],
-	    	        text: objdata.data[indice][1]
-	    	    }));
-	      }
-	  	$( '#cboBusEstado' ).selectmenu( "refresh" );
-	});
-	*/
-    
+       
 	$( "#btnAgregar" ).button({
 		  icon: "ui-icon-plusthick"
 	});
@@ -35,11 +31,14 @@ $( document ).ready(function() {
 	
 	
     table = $('#listausuarios').DataTable( {
+    	ajax: "index.php/listausuarios",
         columns: [
-            { title: "Usuario" },
-            { title: "Nombre" },
-            { title: "Activo"}
+            { width: "20%", data: "usuario" },
+            { data: "nombre" },
+            { width: "10%", data: "descestado"},
+            { data: "estado"}
         ],
+        columnDefs: [ { targets: [3], visible: false }],
         language: {
             "decimal":        "",
             "emptyTable":     "No hay datos disponibles",
@@ -72,15 +71,15 @@ $( document ).ready(function() {
 function grabarTarea() {
 	
 	if(validaIngresoTarea()) {
+		
 		var data = {
-			idusuario : parseInt($("#cboIngUsuario").val()),
-			descripcion: $("#txtIngDescripcion").val(),
-			fechavencimiento: $("#txtIngFecha").val(),
-			avance: parseInt($("#txtIngAvance").val())
+			usuario : $("#txtIngUsuario").val(),
+			nombre: $("#txtIngNombre").val(),
+			estado: $("#cboIngEstado").val()
 		}
 		
 		$.ajax({
-			url: "controller/ingresatarea.php" ,
+			url: "index.php/ingresausuario" ,
 			data: JSON.stringify(data),
 			method: "POST",
 			success: function(response) {
@@ -101,46 +100,23 @@ function grabarTarea() {
 				$( "#dialog" ).dialog("close");
 			}
 		});
+		
 	}
 }
 
 function validaIngresoTarea() {
 	var ret = true;
-	$("#lblValDescripcion").html("");
-	$("#lblValIngFecha").html("");
-	$("#lblValAvance").html("");
+	$("#lblValUsuario").html("");
+	$("#lblValNombre").html("");
 	
-	if($("#txtIngDescripcion").val() == "") {
-		$("#lblValDescripcion").html("Ingrese descripción correctamente");
+	if($("#txtIngUsuario").val() == "") {
+		$("#lblValUsuario").html("Ingrese usuario correctamente");
 		ret = false;
 	} 
-	
-	if(!validaFecha($("#txtIngFecha").val())) {
-		$("#lblValIngFecha").html("Ingrese fecha de vencimiento correctamente");
-		ret = false;
-	} 
-	
-	if(!$.isNumeric($("#txtIngAvance").val()) || parseInt($("#txtIngAvance").val()) < 0 || parseInt($("#txtIngAvance").val()) > 100) {
-		$("#lblValAvance").html("Ingrese avance correctamente");
-		ret = false;
-	} 
-	
-	return ret;
-}
 
-function validaFecha(fecha) {
-	var ret = true;
-	
-	try {
-		if(fecha.trim() == "") {
-			ret = false;
-		} else {
-			$.datepicker.parseDate( "yy-mm-dd", fecha);
-		}
-		
-	}catch(e) {
+	if($("#txtIngNombre").val() == "") {
+		$("#lblValNombre").html("Ingrese nombre correctamente");
 		ret = false;
-	}
-	
-    return ret;
+	} 
+	return ret;
 }
