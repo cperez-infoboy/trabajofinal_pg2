@@ -3,8 +3,9 @@ var table = null;
 $( document ).ready(function() {
 	$( "#tabs" ).tabs();
 	
+	$( "#dialog" ).dialog({ autoOpen: false, modal: true });
+	$( "#dialogError" ).dialog({ autoOpen: false, modal: true });
 	
-    $( "#dialog" ).dialog({ autoOpen: false, modal: true });
     $("#cboIngEstado").selectmenu();
     
     $( "#btnAgregar" ).click(function() {
@@ -19,13 +20,20 @@ $( document ).ready(function() {
     });
     
     $( "#btnGuardarUsuario" ).click(function() {
-        grabarTarea();
+        grabarUsuario();
     });
 
        
 	$( "#btnAgregar" ).button({
 		  icon: "ui-icon-plusthick"
 	});
+	$( "#btnDialogErrorAceptar" ).button();
+    $( "#btnDialogErrorAceptar" ).click(function() {
+		
+    	$( "#dialogError" ).dialog( "close" );
+
+    });
+    
 	
 	$( "#btnGuardarTarea" ).button(); 
 	
@@ -36,7 +44,15 @@ $( document ).ready(function() {
             { width: "20%", data: "usuario" },
             { data: "nombre" },
             { width: "10%", data: "descestado"},
-            { data: "estado"}
+            { data: "estado"},
+            {
+                className:      'options',
+                data:           null,
+                render: function(data, type, full, meta){
+                			return '<button class="botonEditar" onclick="editaUsuario(' + meta.row + ');">Editar</button>';
+                },
+            	width: "10%"
+            }
         ],
         columnDefs: [ { targets: [3], visible: false }],
         language: {
@@ -62,13 +78,12 @@ $( document ).ready(function() {
                 "sortAscending":  ": Activar para ordenar la columna de manera ascendente",
                 "sortDescending": ": Activar para ordenar la columna de manera descendente"
             }
-        },
+        }
     } );
     
-  
 });
 
-function grabarTarea() {
+function grabarUsuario() {
 	
 	if(validaIngresoTarea()) {
 		
@@ -84,24 +99,35 @@ function grabarTarea() {
 			method: "POST",
 			success: function(response) {
 				try {
-					var datatarea = JSON.parse(response);
+					var ret = JSON.parse(response);
+					$( "#dialog" ).dialog("close");
 					
-					if(datatarea instanceof Object && Array.isArray(datatarea.data)) {
-						//Agregamos la fila al datatables
-						
+					if(ret instanceof Object && ret.retorno) {
 						table.ajax.reload();
+					} else {
+						muestraError(ret.data);
 					}
-					
-					
+
 				}catch(e) {
-					
+					$( "#dialog" ).dialog("close");
 				}
+
+			},
+			error: function() {
 				
-				$( "#dialog" ).dialog("close");
 			}
 		});
 		
 	}
+}
+
+function editaUsuario(indice) {
+	alert("Editar " + indice);
+}
+
+function muestraError(msg) {
+	$( "#lblDialogError").html(msg);
+	$( "#dialogError" ).dialog( "open" );
 }
 
 function validaIngresoTarea() {

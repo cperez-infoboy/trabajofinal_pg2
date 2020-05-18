@@ -13,13 +13,20 @@ class Ingresausuario extends CI_Controller {
     	    
     	    $this->load->model('usuarios_model');
     	    
-    	    $this->usuarios_model->insertaUsuario($datosusuario);
-
+    	    try {
+                $this->usuarios_model->insertaUsuario($datosusuario);
+                $this->load->view('jsonreturn', $data);
+    	    } catch(Exception $e) {
+    	        $data['data'] = $e->getMessage();
+    	        $this->load->view('jsonreturnerror', $data);
+    	    }
+    	    
 	    } catch(Exception $e) {
 	        $data['data'] = $e->getMessage();
+	        $this->load->view('jsonreturnerror', $data);
     	}
     	
-    	$this->load->view('jsonreturn', $data);
+    	
     	
 	}
 }

@@ -16,22 +16,22 @@ class Usuarios_model extends CI_Model{
         return $query->result_array();
     }
     
-    function insertaUsuario($datosusuario) {
-        /*
-        $sql = "INSERT INTO usuario(usuario, nombre, estado) VALUES (?,?,?)";
-        
-        $this->db->query($sql, array($datosusuario->usuario,
-                                     $datosusuario->nombre,
-                                     $datosusuario->estado));
-        */
-        
+    function insertaUsuario($datosusuario) {  
         $data = array(
             'usuario' => strval($datosusuario->usuario),
             'nombre' => strval($datosusuario->nombre),
-            'estado' => 0
+            'estado' => intval($datosusuario->estado)
         );
         
-        $this->db->insert('usuario', $data);
+        if(!$this->db->insert('usuario', $data)) {
+            $error = $this->db->error();
+            
+            if($error['code'] == 1062)  
+                throw new Exception('Los datos del usuario ya existen');
+            else 
+                throw new Exception('Ha ocurrido un error al grabar los datos del usuario');
+        }
+            
     }
 }
 

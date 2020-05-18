@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Gestor de tareas</title>
+<title>Usuarios</title>
 <link rel="stylesheet" type="text/css" href="js/datatables/datatables.min.css"/>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.min.css">
 <link rel="stylesheet" type="text/css" href="css/general.css">
@@ -35,6 +35,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			                <th>Usuario</th>
 			                <th>Nombre</th>
 			                <th>Estado</th>
+			                <th></th>
+			           		<th></th>
 			            </tr>
 			        </thead>
 			        <tfoot>
@@ -42,6 +44,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			                <th>Usuario</th>
 			                <th>Nombre</th>
 			                <th>Estado</th>
+			                <th></th>
+			               	<th></th>
 			            </tr>
 			        </tfoot>
 			    </table>
@@ -79,6 +83,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</p>
 		
 		<button name="btnGuardarUsuario" id="btnGuardarUsuario">Guardar</button>
+	</div> 
+	
+	<div id="dialogError" title="Error">
+		<p>
+			<label id="lblDialogError"></label>
+		</p>
+
+		
+		<button id="btnDialogErrorAceptar">Aceptar</button>
 	</div> 
 </body>
 </html>
